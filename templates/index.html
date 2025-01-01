@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Chipoe - Video Explainer</title>
+        <title>Chipoe - Youtube Explainer</title>
         
         <!-- Favicon Links -->
         <link rel="apple-touch-icon" sizes="180x180" href="static/img/favicon/apple-touch-icon.png">
@@ -127,17 +127,17 @@
         <!-- Search Form -->
         <form id="searchForm" class="search-form">
             <div class="mb-3">
-                <label class="form-label">Search By</label>
+                <label class="form-label">Choose Search Method</label>
                 <div>
                     <input type="radio" id="searchByChannel" name="searchType" value="channel" class="form-check-input" checked>
-                    <label for="searchByChannel" class="form-check-label me-3">Channel</label>
+                    <label for="searchByChannel" class="form-check-label me-3">Search by Youtube Channel Name</label>
                     <input type="radio" id="searchByQuery" name="searchType" value="query" class="form-check-input">
-                    <label for="searchByQuery" class="form-check-label">Keywords</label>
+                    <label for="searchByQuery" class="form-check-label">Search Youtube by Keywords</label>
                 </div>
             </div>
             <div class="mb-3">
-                <label for="searchQuery" class="form-label">Search Term</label>
-                <input type="text" id="searchQuery" class="form-control" placeholder="Enter channel or keywords" required>
+                <label for="searchQuery" class="form-label">Enter Search Term</label>
+                <input type="text" id="searchQuery" class="form-control" placeholder="Enter channel name or keywords to search" required>
             </div>
             <button type="submit" class="btn btn-primary w-100">Search</button>
         </form>
