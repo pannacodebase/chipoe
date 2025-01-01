@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chipoe - Video Explainer</title>
+        
+        <!-- Favicon Links -->
+        <link rel="apple-touch-icon" sizes="180x180" href="static/img/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="static/img/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="static/img/favicon/favicon-16x16.png">
+        <link rel="manifest" href="static/img/favicon/site.webmanifest">
+        <link rel="mask-icon" href="static/img/favicon/favicon.ico" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+        
+        <!-- Bootstrap and Styles -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+body {
+    background: url('static/img/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Arial', sans-serif;
+}
+            .spinner-container {
+                display: none;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .spinner-container img {
+                height: 100px;
+            }
+            
+            .container {
+                background: #fff;
+                border-radius: 15px;
+                box-shadow: 0 4px 8px rgb(229, 198, 23);
+                padding: 30px;
+                max-width: 800px;
+                margin-top: 100px;
+            }
+            .btn-primary {
+                background-color: #f2b300;
+                border-color: #f2b300;
+            }
+            .btn-primary:hover {
+                background-color: #f5b600;
+                border-color: #f5b600;
+            }
+            .card {
+                border: none;
+                border-radius: 15px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            .card-body {
+                background-color: #f9f9f9;
+                border-radius: 10px;
+            }
+            h1 {
+                font-size: 2.5rem;
+                color: #333;
+            }
+            label {
+                font-weight: 600;
+            }
+            .form-control {
+                border-radius: 10px;
+                padding: 10px;
+                border: 1px solid #ccc;
+            }
+            .form-check-label {
+                font-weight: 500;
+            }
+            .search-form {
+                background: #ffffff;
+                border-radius: 15px;
+                padding: 25px;
+                box-shadow: 0 4px 6px rgba(172, 116, 32, 0.44);
+            }
+            .card-img-top {
+                border-radius: 10px;
+            }
+            .card-title {
+                font-size: 1.2rem;
+                font-weight: bold;
+                color: #333;
+            }
+            .card-text {
+                font-size: 1rem;
+                color: #555;
+            }
+            .footer {
+                text-align: center;
+                font-size: 0.9rem;
+                color: #fff;
+                margin-top: 30px;
+            }
+            .logo {
+                display: block;
+                margin: 0 auto 20px auto;
+                width: 150px;
+                height: auto;
+            }
+        </style>
+    </head>
+    <body>
+
+    <!-- Logo -->
+
+    <!-- Loading Spinner -->
+    <div class="spinner-container" id="spinnerContainer">
+        <img src="static/img/loader.gif" alt="Loading..." class="img-fluid">
+        <p> Processing </p>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container mt-5" id="mainContent">
+        <img src="static/img/logo.gif" alt="Logo" class="logo"  />
+        <h1 class="text-center mb-4">Chipoe</h1>
+        <p class="text-center" style="margin: 0; padding: 0; line-height: 1;">Explain YouTube Videos</p>
+
+        <!-- Search Form -->
+        <form id="searchForm" class="search-form">
+            <div class="mb-3">
+                <label class="form-label">Search Type</label>
+                <div>
+                    <input type="radio" id="searchByChannel" name="searchType" value="channel" class="form-check-input" checked>
+                    <label for="searchByChannel" class="form-check-label me-3">Channel</label>
+                    <input type="radio" id="searchByQuery" name="searchType" value="query" class="form-check-input">
+                    <label for="searchByQuery" class="form-check-label">Query</label>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="searchQuery" class="form-label">Search Term</label>
+                <input type="text" id="searchQuery" class="form-control" placeholder="Enter channel name or query" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Search</button>
+        </form>
+
+        <!-- Video Results Section -->
+        <div id="videoResults" class="row g-4 mt-4"></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Chipoe. All rights reserved.</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // On form submission
+            $('#searchForm').on('submit', function(event) {
+                event.preventDefault();
+                const searchType = $('input[name="searchType"]:checked').val();
+                const query = $('#searchQuery').val();
+                
+                // Show spinner when search starts
+                $('#spinnerContainer').show();
+                $('#videoResults').empty(); // Clear any previous results
+
+                // Send AJAX request
+                $.ajax({
+                    url: '/get_videos',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ search_type: searchType, query: query }),
+                    success: function(response) {
+                        $('#spinnerContainer').hide(); // Hide spinner once data is received
+                        response.forEach(video => {
+                            $('#videoResults').append(`
+                                <div class="col-md-12">
+                                    <div class="card shadow border-0 rounded-3">
+                                        <img src="${video.thumbnail}" class="card-img-top" alt="Thumbnail">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${video.title}</h5>
+                                            <p class="card-text">${video.summary}</p>
+                                            <a href="${video.url}" target="_blank" class="btn btn-primary">Watch Video</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            `);
+                        });
+                    },
+                    error: function() {
+                        $('#spinnerContainer').hide();
+                        $('#videoResults').html('<p class="text-danger">Error fetching videos.</p>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
