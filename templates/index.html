@@ -17,27 +17,25 @@
         <!-- Bootstrap and Styles -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
         <style>
-body {
-    background: url('static/img/bg.jpg') no-repeat center center fixed;
-    background-size: cover;
-    font-family: 'Arial', sans-serif;
-}
-           .spinner-container {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff; /* Set background to white */
-    padding: 20px; /* Add padding for spacing */
-    border-radius: 10px; /* Optional: add rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add subtle shadow */
-}
-
+            body {
+                background: url('static/img/bg.jpg') no-repeat center center fixed;
+                background-size: cover;
+                font-family: 'Arial', sans-serif;
+            }
+            .spinner-container {
+                display: none;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
             .spinner-container img {
                 height: 100px;
             }
-            
             .container {
                 background: #fff;
                 border-radius: 15px;
@@ -129,17 +127,17 @@ body {
         <!-- Search Form -->
         <form id="searchForm" class="search-form">
             <div class="mb-3">
-                <label class="form-label">Search Type</label>
+                <label class="form-label">Search By</label>
                 <div>
                     <input type="radio" id="searchByChannel" name="searchType" value="channel" class="form-check-input" checked>
                     <label for="searchByChannel" class="form-check-label me-3">Channel</label>
                     <input type="radio" id="searchByQuery" name="searchType" value="query" class="form-check-input">
-                    <label for="searchByQuery" class="form-check-label">Query</label>
+                    <label for="searchByQuery" class="form-check-label">Keywords</label>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="searchQuery" class="form-label">Search Term</label>
-                <input type="text" id="searchQuery" class="form-control" placeholder="Enter channel name or query" required>
+                <input type="text" id="searchQuery" class="form-control" placeholder="Enter channel or keywords" required>
             </div>
             <button type="submit" class="btn btn-primary w-100">Search</button>
         </form>
